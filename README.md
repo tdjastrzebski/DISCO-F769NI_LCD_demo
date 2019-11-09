@@ -16,3 +16,5 @@ See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step in
 * GNU Make https://www.gnu.org/software/make/  
 download: https://github.com/mbuilov/gnumake-windows
 * StLink Tools https://github.com/texane/stlink/
+
+![stm32f769](stm32f769.png)
