@@ -1,0 +1,17 @@
+{
+    "version":"0.2.0",
+    "configurations": [
+        {
+            "name": "Debug (ST-Util)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stutil",
+            "cwd": "${workspaceRoot}",
+            "executable": "./BUILD/debug/${workspaceRootFolderName}.elf",
+            "device": "STM32F769NI",
+            "v1": false,
+            "svdFile": "${workspaceRoot}/STM32F7x9.svd",
+            "preLaunchTask": "Build++"
+        }
+    ]
+}

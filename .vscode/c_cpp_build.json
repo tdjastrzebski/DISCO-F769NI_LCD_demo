@@ -1,0 +1,67 @@
+{
+	"version": 1,
+	"params": { "buildDir": "BUILD" },
+	"configurations": [
+		{
+			"name": "GCC",
+			"problemMatchers": ["$gcc"],
+			"buildTypes": [
+				{
+					"name": "debug",
+					"params": {
+						"buildTypeParams": "-O0 -g"
+					}
+				},
+				{
+					"name": "release",
+					"params": {
+						"buildTypeParams": "-Os -g1"
+					}
+				}
+			],
+			"params": {"buildOutput": "${buildDir}/${buildTypeName}"},
+			"buildSteps": [
+				{
+					"name": "C Compile",
+					"filePattern": "**/*.c",
+					"outputFile": "${buildOutput}/${fileDirectory}/${fileName}.o",
+					"command": "arm-none-eabi-gcc -std=gnu11 -c ${buildTypeParams} -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
+				},
+				{
+					"name": "C++ Compile",
+					"filePattern": "**/*.cpp",
+					"outputFile": "${buildOutput}/${fileDirectory}/${fileName}.o",
+					"command": "arm-none-eabi-g++ -std=gnu++14 -c ${buildTypeParams} -fno-rtti -Wvla -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
+				},
+				{
+					"name": "Build link script",
+					"command": "arm-none-eabi-cpp -E -P -Wl,--gc-sections -Wl,--wrap,main -Wl,--wrap,_malloc_r -Wl,--wrap,_free_r -Wl,--wrap,_realloc_r -Wl,--wrap,_memalign_r -Wl,--wrap,_calloc_r -Wl,--wrap,exit -Wl,--wrap,atexit -Wl,-n -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp -DMBED_ROM_START=0x8000000 -DMBED_ROM_SIZE=0x200000 -DMBED_ROM1_START=0x200000 -DMBED_ROM1_SIZE=0x200000 -DMBED_RAM_START=0x20020000 -DMBED_RAM_SIZE=0x60000 -DMBED_RAM1_START=0x20000000 -DMBED_RAM1_SIZE=0x20000 -DMBED_BOOT_STACK_SIZE=4096 [mbed/TARGET_DISCO_F769NI/TOOLCHAIN_GCC_ARM/STM32F769xI.ld] -o [${buildOutput}/${workspaceRootFolderName}.link_script.ld]"
+				},
+				{
+					"name": "Build object list 1",
+					"command": "find [${buildOutput}] -type f -name '*.o' > [${buildOutput}/object_list.txt]"
+				},
+				{
+					"name": "Build object list 2",
+					"command": "find mbed -type f -name '*.o' >> [${buildOutput}/object_list.txt]"
+				},
+				{
+					"name": "Link to elf",
+					"command": "arm-none-eabi-gcc -Wl,--gc-sections -Wl,--wrap,main -Wl,--wrap,_malloc_r -Wl,--wrap,_free_r -Wl,--wrap,_realloc_r -Wl,--wrap,_memalign_r -Wl,--wrap,_calloc_r -Wl,--wrap,exit -Wl,--wrap,atexit -Wl,-n -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp -DMBED_ROM_START=0x8000000 -DMBED_ROM_SIZE=0x200000 -DMBED_ROM1_START=0x200000 -DMBED_ROM1_SIZE=0x200000 -DMBED_RAM_START=0x20020000 -DMBED_RAM_SIZE=0x60000 -DMBED_RAM1_START=0x20000000 -DMBED_RAM1_SIZE=0x20000 -DMBED_BOOT_STACK_SIZE=4096 -T [${buildOutput}/${workspaceRootFolderName}.link_script.ld] -L[mbed/TARGET_DISCO_F769NI/TOOLCHAIN_GCC_ARM] -o [${buildOutput}/${workspaceRootFolderName}.elf] @[${buildOutput}/object_list.txt] -lmbed -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -lmbed -Wl,--end-group"
+				},
+				{
+					"name": "elf -> bin",
+					"command": "arm-none-eabi-objcopy -O binary [${buildOutput}/${workspaceRootFolderName}.elf] [$${buildOutput}/${workspaceRootFolderName}.bin]"
+				},
+				{
+					"name": "elf -> hex",
+					"command": "arm-none-eabi-objcopy -O ihex [${buildOutput}/${workspaceRootFolderName}.elf] [${buildOutput}/${workspaceRootFolderName}.hex]"
+				},
+				{
+					"name": "Deploy",
+					"command": "st-flash write [${buildOutput}/${workspaceRootFolderName}.bin] 0x08000000"
+				}
+			]
+		}
+	]
+}
