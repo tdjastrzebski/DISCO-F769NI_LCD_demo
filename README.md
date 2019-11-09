@@ -1,4 +1,5 @@
-### This repo contains demo project for STM32F769 discovery kit with LCD support
+### This repo contains demo project for STM32F769 discovery kit with LCD support demonstrating how to program STM32F7 using open source tools only
+
 Open this project with VS Code.  
 See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step instructions.
 ### Requirements:
