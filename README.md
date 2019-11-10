@@ -11,13 +11,13 @@ See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step in
     * LinkerScript
     * Intel HEX Format
     * Code Spell Checker
-* Git https://git-scm.com/downloads
+* Git https://git-scm.com
 * GNU Arm Embedded Toolchain  
 https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm
 * GNU Make https://www.gnu.org/software/make  
 download: https://github.com/mbuilov/gnumake-windows
 * StLink Tools https://github.com/texane/stlink
-* node.js https://nodejs.org/en/download
+* node.js https://nodejs.org
 * cppbuild tool https://github.com/tdjastrzebski/cppbuild  
 `npm install cppbuild -g`
 
