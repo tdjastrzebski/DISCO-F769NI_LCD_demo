@@ -4,7 +4,7 @@ Open this project with VS Code.
 See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step instructions.
 ### Required tools:
 * VS Code https://code.visualstudio.com
-* VS Code Extensions:
+* VS Code extensions:
     * C/C++
     * Cortex-Debug
     * Build++
