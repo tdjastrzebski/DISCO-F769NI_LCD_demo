@@ -2,15 +2,16 @@
 
 Open this project with VS Code.  
 See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step instructions.
-### Requirements:
+### Required tools:
 * VS Code https://code.visualstudio.com/
 * VS Code Extensions:
     * C/C++
     * Cortex-Debug
-    * Intel HEX Format
-    * LinkerScript
-    * Code Spell Checker
     * Build++
+    * LinkerScript
+    * Intel HEX Format
+    * Code Spell Checker
+* Git https://git-scm.com/downloads
 * GNU Arm Embedded Toolchain  
 https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
 * GNU Make https://www.gnu.org/software/make/  
