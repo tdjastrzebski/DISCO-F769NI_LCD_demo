@@ -3,7 +3,7 @@
 Open this project with VS Code.  
 See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step instructions.
 ### Required tools:
-* VS Code https://code.visualstudio.com/
+* VS Code https://code.visualstudio.com
 * VS Code Extensions:
     * C/C++
     * Cortex-Debug
@@ -14,11 +14,11 @@ See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step in
 * Git https://git-scm.com/downloads
 * GNU Arm Embedded Toolchain  
 https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/
-* GNU Make https://www.gnu.org/software/make/  
+* GNU Make https://www.gnu.org/software/make  
 download: https://github.com/mbuilov/gnumake-windows
-* StLink Tools https://github.com/texane/stlink/
-* node.js https://nodejs.org/en/download/
-* cppbuild tool https://github.com/tdjastrzebski/cppbuild/  
+* StLink Tools https://github.com/texane/stlink
+* node.js https://nodejs.org/en/download
+* cppbuild tool https://github.com/tdjastrzebski/cppbuild  
 `npm install cppbuild -g`
 
 ![stm32f769](stm32f769.png)
