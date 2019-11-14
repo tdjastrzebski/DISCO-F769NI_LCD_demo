@@ -22,7 +22,7 @@ download: https://github.com/mbuilov/gnumake-windows
 `npm install cppbuild -g`
 
 ### Feedback
-Do not hesitate to leave comments/suggestions.
+Do not hesitate to leave comments/suggestions.  
 If you find this useful, please give it a star. This way others will be able to find it more easily.
 
 ![stm32f769](stm32f769.png)
