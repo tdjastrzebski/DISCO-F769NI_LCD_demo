@@ -1,7 +1,7 @@
 ### This repo contains demo project for STM32F769 discovery kit with LCD support demonstrating how to program and debug STM32F7 with open source, cross-platform tools only
-
 Open this project with VS Code.  
 See [How to program STM32F7.pdf](How-to-program-STM32F7.pdf) for step-by-step instructions.
+
 ### Required tools:
 * VS Code https://code.visualstudio.com
 * VS Code extensions:
@@ -20,5 +20,9 @@ download: https://github.com/mbuilov/gnumake-windows
 * node.js https://nodejs.org
 * cppbuild tool https://github.com/tdjastrzebski/cppbuild  
 `npm install cppbuild -g`
+
+### Feedback
+Do not hesitate to leave comments/suggestions.
+If you find this useful, please give it a star. This way others will be able to find it more easily.
 
 ![stm32f769](stm32f769.png)
