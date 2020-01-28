@@ -77,9 +77,10 @@
             "type": "shell",
             "command": "cppbuild",
             "args": [
-                "GCC",
+                "gcc",
                 "debug",
-                "-w"
+                "-w",
+                "-d"
             ],
             "presentation": {
                 "clear": true

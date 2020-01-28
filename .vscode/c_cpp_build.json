@@ -1,9 +1,12 @@
 {
 	"version": 1,
-	"params": { "buildDir": "BUILD" },
+	"params": {
+		"buildDir": "BUILD",
+		"buildOutput": "${buildDir}/${buildTypeName}"
+	},
 	"configurations": [
 		{
-			"name": "GCC",
+			"name": "gcc",
 			"problemMatchers": ["$gcc"],
 			"buildTypes": [
 				{
@@ -19,18 +22,19 @@
 					}
 				}
 			],
-			"params": {"buildOutput": "${buildDir}/${buildTypeName}"},
 			"buildSteps": [
 				{
 					"name": "C Compile",
 					"filePattern": "**/*.c",
 					"outputFile": "${buildOutput}/${fileDirectory}/${fileName}.o",
+					"trimIncludePaths": true,
 					"command": "arm-none-eabi-gcc -std=gnu11 -c ${buildTypeParams} -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
 				},
 				{
 					"name": "C++ Compile",
 					"filePattern": "**/*.cpp",
 					"outputFile": "${buildOutput}/${fileDirectory}/${fileName}.o",
+					"trimIncludePaths": true,
 					"command": "arm-none-eabi-g++ -std=gnu++14 -c ${buildTypeParams} -fno-rtti -Wvla -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
 				},
 				{

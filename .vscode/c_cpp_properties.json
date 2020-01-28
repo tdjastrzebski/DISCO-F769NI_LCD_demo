@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "GCC",
+            "name": "gcc",
             "intelliSenseMode": "gcc-x64",
             "cStandard": "c11",
             "cppStandard": "c++14",
@@ -10,7 +10,6 @@
                 "${workspaceFolder}/mbed_config.h"
             ],
             "includePath": [
-                "/usr/src/mbed-sdk/",
                 "BSP_DISCO_F769NI/**",
                 "LCD_DISCO_F769NI/**",
                 "mbed/**"
