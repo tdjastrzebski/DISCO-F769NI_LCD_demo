@@ -28,30 +28,41 @@
 					"filePattern": "**/*.c",
 					"outputFile": "${buildOutput}/${fileDirectory}/${fileName}.o",
 					"trimIncludePaths": true,
-					"command": "arm-none-eabi-gcc -std=gnu11 -c ${buildTypeParams} -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
+					"params": {"flags": "-fdata-sections -ffunction-sections -fmessage-length=0 -fno-delete-null-pointer-checks -fno-exceptions -fomit-frame-pointer -funsigned-char -mcpu=cortex-m7 -mfloat-abi=softfp -mfpu=fpv5-d16 -MMD -mthumb -Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter"},
+					"command": "arm-none-eabi-gcc -std=gnu11 -c ${buildTypeParams} ${flags} (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
 				},
 				{
 					"name": "C++ Compile",
 					"filePattern": "**/*.cpp",
 					"outputFile": "${buildOutput}/${fileDirectory}/${fileName}.o",
 					"trimIncludePaths": true,
-					"command": "arm-none-eabi-g++ -std=gnu++14 -c ${buildTypeParams} -fno-rtti -Wvla -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -funsigned-char -MMD -fno-delete-null-pointer-checks -fomit-frame-pointer -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
+					"params": {"flags": "-fdata-sections -ffunction-sections -fmessage-length=0 -fno-delete-null-pointer-checks -fno-exceptions -fno-rtti -fomit-frame-pointer -funsigned-char -mcpu=cortex-m7 -mfloat-abi=softfp -mfpu=fpv5-d16 -MMD -mthumb -Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter -Wvla"},
+					"command": "arm-none-eabi-g++ -std=gnu++14 -c ${buildTypeParams} ${flags} (-I[$${includePath}]) (-D$${defines}) (-include [$${forcedInclude}]) [${filePath}] -o [${outputFile}]"
 				},
 				{
 					"name": "Build link script",
-					"command": "arm-none-eabi-cpp -E -P -Wl,--gc-sections -Wl,--wrap,main -Wl,--wrap,_malloc_r -Wl,--wrap,_free_r -Wl,--wrap,_realloc_r -Wl,--wrap,_memalign_r -Wl,--wrap,_calloc_r -Wl,--wrap,exit -Wl,--wrap,atexit -Wl,-n -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp -DMBED_ROM_START=0x8000000 -DMBED_ROM_SIZE=0x200000 -DMBED_ROM1_START=0x200000 -DMBED_ROM1_SIZE=0x200000 -DMBED_RAM_START=0x20020000 -DMBED_RAM_SIZE=0x60000 -DMBED_RAM1_START=0x20000000 -DMBED_RAM1_SIZE=0x20000 -DMBED_BOOT_STACK_SIZE=4096 [mbed/TARGET_DISCO_F769NI/TOOLCHAIN_GCC_ARM/STM32F769xI.ld] -o [${buildOutput}/${workspaceRootFolderName}.link_script.ld]"
+					"params": {
+						"flags": "-E -P -Wl,--gc-sections -Wl,--wrap,main -Wl,--wrap,_malloc_r -Wl,--wrap,_free_r -Wl,--wrap,_realloc_r -Wl,--wrap,_memalign_r -Wl,--wrap,_calloc_r -Wl,--wrap,exit -Wl,--wrap,atexit -Wl,-n -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp",
+						"memDefines": "-DMBED_ROM_START=0x8000000 -DMBED_ROM_SIZE=0x200000 -DMBED_ROM1_START=0x200000 -DMBED_ROM1_SIZE=0x200000 -DMBED_RAM_START=0x20020000 -DMBED_RAM_SIZE=0x60000 -DMBED_RAM1_START=0x20000000 -DMBED_RAM1_SIZE=0x20000 -DMBED_BOOT_STACK_SIZE=4096"
+					},
+					"command": "arm-none-eabi-cpp ${flags} ${memDefines} [mbed/TARGET_DISCO_F769NI/TOOLCHAIN_GCC_ARM/STM32F769xI.ld] -o [${buildOutput}/${workspaceRootFolderName}.link_script.ld]"
 				},
 				{
 					"name": "Build object list 1",
-					"command": "find [${buildOutput}] -type f -name '*.o' > [${buildOutput}/object_list.txt]"
+					"command": "find [${buildOutput}] -type f -name '*.o' > [${buildOutput}/objects.txt]"
 				},
 				{
 					"name": "Build object list 2",
-					"command": "find mbed -type f -name '*.o' >> [${buildOutput}/object_list.txt]"
+					"command": "find mbed -type f -name '*.o' >> [${buildOutput}/objects.txt]"
 				},
 				{
 					"name": "Link to elf",
-					"command": "arm-none-eabi-gcc -Wl,--gc-sections -Wl,--wrap,main -Wl,--wrap,_malloc_r -Wl,--wrap,_free_r -Wl,--wrap,_realloc_r -Wl,--wrap,_memalign_r -Wl,--wrap,_calloc_r -Wl,--wrap,exit -Wl,--wrap,atexit -Wl,-n -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp -DMBED_ROM_START=0x8000000 -DMBED_ROM_SIZE=0x200000 -DMBED_ROM1_START=0x200000 -DMBED_ROM1_SIZE=0x200000 -DMBED_RAM_START=0x20020000 -DMBED_RAM_SIZE=0x60000 -DMBED_RAM1_START=0x20000000 -DMBED_RAM1_SIZE=0x20000 -DMBED_BOOT_STACK_SIZE=4096 -T [${buildOutput}/${workspaceRootFolderName}.link_script.ld] -L[mbed/TARGET_DISCO_F769NI/TOOLCHAIN_GCC_ARM] -o [${buildOutput}/${workspaceRootFolderName}.elf] @[${buildOutput}/object_list.txt] -lmbed -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -lmbed -Wl,--end-group"
+					"params": {
+						"flags": "-Wl,--gc-sections -Wl,--wrap,main -Wl,--wrap,_malloc_r -Wl,--wrap,_free_r -Wl,--wrap,_realloc_r -Wl,--wrap,_memalign_r -Wl,--wrap,_calloc_r -Wl,--wrap,exit -Wl,--wrap,atexit -Wl,-n -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -mfloat-abi=softfp",
+						"memDefines": "-DMBED_ROM_START=0x8000000 -DMBED_ROM_SIZE=0x200000 -DMBED_ROM1_START=0x200000 -DMBED_ROM1_SIZE=0x200000 -DMBED_RAM_START=0x20020000 -DMBED_RAM_SIZE=0x60000 -DMBED_RAM1_START=0x20000000 -DMBED_RAM1_SIZE=0x20000 -DMBED_BOOT_STACK_SIZE=4096",
+						"sysLibs": "-lmbed -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -lmbed -Wl,--end-group"
+					},
+					"command": "arm-none-eabi-gcc ${flags} ${memDefines} -T [${buildOutput}/${workspaceRootFolderName}.link_script.ld] -L[mbed/TARGET_DISCO_F769NI/TOOLCHAIN_GCC_ARM] -o [${buildOutput}/${workspaceRootFolderName}.elf] @[${buildOutput}/objects.txt] ${sysLibs}"
 				},
 				{
 					"name": "elf -> bin",
