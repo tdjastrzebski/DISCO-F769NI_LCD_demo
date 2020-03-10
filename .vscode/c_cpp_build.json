@@ -11,15 +11,11 @@
 			"buildTypes": [
 				{
 					"name": "debug",
-					"params": {
-						"buildTypeParams": "-O0 -g"
-					}
+					"params": { "buildTypeParams": "-O0 -g" }
 				},
 				{
 					"name": "release",
-					"params": {
-						"buildTypeParams": "-Os -g1"
-					}
+					"params": { "buildTypeParams": "-Os -g1" }
 				}
 			],
 			"buildSteps": [
